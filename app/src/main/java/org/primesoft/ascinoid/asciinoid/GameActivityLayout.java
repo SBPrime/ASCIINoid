@@ -4,25 +4,35 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import org.primesoft.ascinoid.asciinoid.engine.IHiResTimer;
+import org.primesoft.ascinoid.asciinoid.engine.implementation.HiResTimer;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by user on 2017-05-14.
  */
 
 public class GameActivityLayout extends SurfaceView implements Runnable {
+    private final static DecimalFormat FORMAT_DOUBLE = new DecimalFormat("#.00");
 
-    Thread m_thread = null;
-    boolean m_canDraw = false;
-    Canvas m_canvas;
-    SurfaceHolder m_surfaceHolder;
+    private IHiResTimer m_timer = new HiResTimer();
 
-    int m_movingTgr_X;
-    int m_movingTgr_Y;
-    int m_movingDir_X;
-    int m_movingDir_Y;
+    private Thread m_thread = null;
+
+    private boolean m_canDraw = false;
+    private Canvas m_canvas;
+    private SurfaceHolder m_surfaceHolder;
+
+    private int m_movingTgr_X;
+    private int m_movingTgr_Y;
+    private int m_movingDir_X;
+    private int m_movingDir_Y;
 
     public GameActivityLayout(Context context) {
         super(context);
@@ -36,9 +46,13 @@ public class GameActivityLayout extends SurfaceView implements Runnable {
 
     @Override
     public void run() {
+        long fps = 0;
+
         Paint whiteBrushSolid = new Paint();
         whiteBrushSolid.setColor(Color.WHITE);
         whiteBrushSolid.setStyle(Paint.Style.FILL);
+
+        m_timer.init();
 
         while(m_canDraw)
         {
@@ -47,10 +61,25 @@ public class GameActivityLayout extends SurfaceView implements Runnable {
                 continue;
             }
             m_canvas = m_surfaceHolder.lockCanvas();
-            moveCircle(50);
-            m_canvas.drawColor(Color.BLACK);
-            m_canvas.drawCircle(m_movingTgr_X,m_movingTgr_Y,10,whiteBrushSolid);
-            m_surfaceHolder.unlockCanvasAndPost(m_canvas);
+            try {
+                moveCircle(50);
+                m_canvas.drawColor(Color.BLACK);
+                m_canvas.drawCircle(m_movingTgr_X, m_movingTgr_Y, 10, whiteBrushSolid);
+
+                // Limit the FPS to 30.
+                m_timer.lockFPS(30);
+            }
+            finally {
+                m_surfaceHolder.unlockCanvasAndPost(m_canvas);
+                fps++;
+
+                //Log the current FPS each 60 frames.
+                if (fps % 60 == 0) {
+                    Log.i("FPS", FORMAT_DOUBLE.format(m_timer.getFPS(fps)));
+
+                    fps = 0;
+                }
+            }
         }
     }
 
