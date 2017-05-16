@@ -14,24 +14,24 @@ import android.view.View;
 
 public class GameActivityLayout extends SurfaceView implements Runnable {
 
-    Thread thread = null;
-    boolean CanDraw = false;
-    Canvas canvas;
-    SurfaceHolder surfaceHolder;
+    Thread m_thread = null;
+    boolean m_canDraw = false;
+    Canvas m_canvas;
+    SurfaceHolder m_surfaceHolder;
 
-    int movingTgr_X;
-    int movingTgr_Y;
-    int movingDir_X;
-    int movingDir_Y;
+    int m_movingTgr_X;
+    int m_movingTgr_Y;
+    int m_movingDir_X;
+    int m_movingDir_Y;
 
     public GameActivityLayout(Context context) {
         super(context);
-        surfaceHolder = getHolder();
+        m_surfaceHolder = getHolder();
 
-        movingDir_X = 1;
-        movingDir_Y = 1;
-        movingTgr_X = 10;
-        movingTgr_Y = 10;
+        m_movingDir_X = 1;
+        m_movingDir_Y = 1;
+        m_movingTgr_X = 10;
+        m_movingTgr_Y = 10;
     }
 
     @Override
@@ -40,65 +40,65 @@ public class GameActivityLayout extends SurfaceView implements Runnable {
         whiteBrushSolid.setColor(Color.WHITE);
         whiteBrushSolid.setStyle(Paint.Style.FILL);
 
-        while(CanDraw)
+        while(m_canDraw)
         {
-            if(!surfaceHolder.getSurface().isValid())
+            if(!m_surfaceHolder.getSurface().isValid())
             {
                 continue;
             }
-            canvas = surfaceHolder.lockCanvas();
+            m_canvas = m_surfaceHolder.lockCanvas();
             moveCircle(50);
-            canvas.drawColor(Color.BLACK);
-            canvas.drawCircle(movingTgr_X,movingTgr_Y,10,whiteBrushSolid);
-            surfaceHolder.unlockCanvasAndPost(canvas);
+            m_canvas.drawColor(Color.BLACK);
+            m_canvas.drawCircle(m_movingTgr_X,m_movingTgr_Y,10,whiteBrushSolid);
+            m_surfaceHolder.unlockCanvasAndPost(m_canvas);
         }
     }
 
     public void pause()
     {
-        CanDraw = false;
+        m_canDraw = false;
         while (true)
         {
             try {
-                thread.join();
+                m_thread.join();
                 break;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        thread = null;
+        m_thread = null;
     }
 
     public void resume()
     {
-        CanDraw = true;
-        thread = new Thread(this);
-        thread.start();
+        m_canDraw = true;
+        m_thread = new Thread(this);
+        m_thread.start();
      }
 
     public void moveCircle(int speed)
     {
-        if (movingTgr_X < speed)
+        if (m_movingTgr_X < speed)
         {
-            movingDir_X = 1;
+            m_movingDir_X = 1;
         }
 
-        if (movingTgr_X > canvas.getWidth()-speed)
+        if (m_movingTgr_X > m_canvas.getWidth()-speed)
         {
-            movingDir_X = -1;
+            m_movingDir_X = -1;
         }
 
-        if (movingTgr_Y < speed)
+        if (m_movingTgr_Y < speed)
         {
-            movingDir_Y = 1;
+            m_movingDir_Y = 1;
         }
 
-        if (movingTgr_Y > canvas.getHeight()-speed)
+        if (m_movingTgr_Y > m_canvas.getHeight()-speed)
         {
-            movingDir_Y = -1;
+            m_movingDir_Y = -1;
         }
 
-        movingTgr_Y += speed*movingDir_Y;
-        movingTgr_X += speed*movingDir_X;
+        m_movingTgr_Y += speed*m_movingDir_Y;
+        m_movingTgr_X += speed*m_movingDir_X;
     }
 }

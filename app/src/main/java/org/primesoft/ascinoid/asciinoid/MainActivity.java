@@ -15,11 +15,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void onMoveBallBtnClick(View v)
     {
-        if(v.getId()==R.id.buttonMoveBall)
-        {
-            Intent i = new Intent(MainActivity.this, GameActivity.class);
-            startActivity(i);
-        }
+        if(v.getId()!=R.id.buttonMoveBall) return;
+
+
+        Intent i = new Intent(MainActivity.this, GameActivity.class);
+        startActivity(i);
+
 
     }
 }
