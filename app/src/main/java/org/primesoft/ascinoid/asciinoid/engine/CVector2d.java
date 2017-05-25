@@ -438,7 +438,7 @@ public final class CVector2d {
     @Override
     public final int hashCode() {
         // NOTE: You need to use readonly fields to calculate the hashCode.
-        
+
         /*long longHash = Double.doubleToRawLongBits(m_x) ^
                 Double.doubleToRawLongBits(m_y);
         return (int) (longHash ^ (longHash >>> 32));*/
