@@ -500,10 +500,14 @@ public final class CVector {
 
     @Override
     public final int hashCode() {
-        long longHash = Double.doubleToRawLongBits(m_x) ^
+        // NOTE: You need to use readonly fields to calculate the hashCode.
+
+        /*long longHash = Double.doubleToRawLongBits(m_x) ^
                 Double.doubleToRawLongBits(m_y) ^
                 Double.doubleToRawLongBits(m_z);
-        return (int) (longHash ^ (longHash >>> 32));
+        return (int) (longHash ^ (longHash >>> 32));*/
+
+        return super.hashCode();
     }
 
     public final CVector clone() {
