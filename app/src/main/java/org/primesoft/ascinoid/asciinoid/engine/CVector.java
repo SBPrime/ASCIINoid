@@ -351,6 +351,18 @@ public final class CVector {
         return new CVector(vec).subZ(z);
     }
 
+    public final CVector inv() {
+        m_x = -m_x;
+        m_y = -m_y;
+        m_z = -m_z;
+
+        return this;
+    }
+
+    public final static CVector inv(CVector vec) {
+        return new CVector(vec).inv();
+    }
+
     /**
      * Multiply vector by scallar
      *
@@ -439,7 +451,11 @@ public final class CVector {
         return m_x * vec.m_x + m_y * vec.m_x + m_z * vec.m_z;
     }
 
-    public final void normalize() {
+    /**
+     * Normalizes the vector (converts to unit vector)
+     * @return this to chain operations
+     */
+    public final CVector normalize() {
         double length = getLength();
 
         if (length == 0) {
@@ -451,6 +467,8 @@ public final class CVector {
             m_y /= length;
             m_z /= length;
         }
+
+        return this;
     }
 
     public final static double angle(CVector vec, CVector normal) {

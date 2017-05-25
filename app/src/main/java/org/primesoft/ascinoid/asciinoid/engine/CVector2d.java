@@ -289,6 +289,17 @@ public final class CVector2d {
         return new CVector2d(vec).subY(y);
     }
 
+    public final CVector2d inv() {
+        m_x = -m_x;
+        m_y = -m_y;
+
+        return this;
+    }
+
+    public final static CVector2d inv(CVector2d vec) {
+        return new CVector2d(vec).inv();
+    }
+
     /**
      * Multiply vector by scallar
      *
@@ -380,7 +391,11 @@ public final class CVector2d {
         return m_x * vec.m_x + m_y * vec.m_x;
     }
 
-    public final void normalize() {
+    /**
+     * Normalizes the vector (converts to unit vector)
+     * @return this to chain operations
+     */
+    public final CVector2d normalize() {
         double length = getLength();
 
         if (length == 0) {
@@ -390,6 +405,8 @@ public final class CVector2d {
             m_x /= length;
             m_y /= length;
         }
+
+        return this;
     }
 
     public final static double angle(CVector2d vec, CVector2d normal) {
