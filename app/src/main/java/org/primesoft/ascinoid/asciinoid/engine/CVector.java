@@ -48,6 +48,25 @@ public final class CVector {
         return Math.sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
     }
 
+    /**
+     * Set the length of the vector to l
+     * @param l
+     * @return this object to chain operations
+     */
+    public final CVector setLength(double l) {
+        return mul(l / getLength());
+    }
+
+    /**
+     * Set the length of the vector to l
+     * @param v
+     * @param l
+     * @return new vector
+     */
+    public final static CVector setLength(CVector v, double l) {
+        return mul(v, l / v.getLength());
+    }
+
     private CVector() {
         this(0, 0, 0);
     }
@@ -68,7 +87,7 @@ public final class CVector {
     /**
      * Create new unit vector based on this vector
      *
-     * @return
+     * @return new vector
      */
     public final CVector toUnitVector() {
         double length = getLength();
@@ -77,7 +96,7 @@ public final class CVector {
             return new CVector(0, 0, 0);
         }
 
-        return div(length);
+        return div(this, length);
     }
 
     /**
@@ -103,139 +122,311 @@ public final class CVector {
     }
 
     /**
-     * Add components and create new Vector
+     * Add components
      *
      * @param vec
-     * @return New vecotr instance
+     * @return this object to chain operations
      */
     public final CVector add(CVector vec) {
         return add(vec.m_x, vec.m_y, vec.m_z);
     }
 
     /**
-     * Add values to components and create new Vector
+     * Add components
+     *
+     * @param vec1
+     * @param vec2
+     * @return new vector
+     */
+    public final static CVector add(CVector vec1, CVector vec2) {
+        return add(vec1, vec2.m_x, vec2.m_y, vec2.m_z);
+    }
+
+    /**
+     * Add values to components
      *
      * @param x
      * @param y
      * @param z
-     * @return New vector instance
+     * @return this object to chain operations
      */
     public final CVector add(double x, double y, double z) {
-        return new CVector(x + m_x, y + m_y, z + m_z);
+        m_x += x;
+        m_y += y;
+        m_z += z;
+        return this;
     }
 
+
     /**
-     * Add values to X component and create new Vector
+     * Add values to components
      *
      * @param x
-     * @return New vector instance
+     * @param y
+     * @param z
+     * @return new vector
+     */
+    public final static CVector add(CVector vec, double x, double y, double z) {
+        return new CVector(vec).add(x, y, z);
+    }
+
+    /**
+     * Add values to X component
+     *
+     * @param x
+     * @return this object to chain operations
      */
     public final CVector addX(double x) {
-        return new CVector(x + m_x, m_y, m_z);
+        m_x += x;
+        return this;
     }
 
     /**
-     * Add values to Y component and create new Vector
+     * Add values to Y component
      *
      * @param y
-     * @return New vector instance
+     * @return this object to chain operations
      */
     public final CVector addY(double y) {
-        return new CVector(m_x, y + m_y, m_z);
+        m_y += y;
+        return this;
     }
 
     /**
-     * Add values to Z component and create new Vector
+     * Add values to Z component
      *
      * @param z
-     * @return New vector instance
+     * @return this object to chain operations
      */
     public final CVector addZ(double z) {
-        return new CVector(m_x, m_y, z + m_z);
+        m_z += z;
+        return this;
     }
 
     /**
-     * Sub components and create new Vector
+     * Add values to X component
+     *
+     * @param x
+     * @param vec
+     * @return new vector
+     */
+    public final static CVector addX(CVector vec, double x) {
+        return new CVector(vec).addX(x);
+    }
+
+    /**
+     * Add values to Y component
+     *
+     * @param y
+     * @param vec
+     * @return new vector
+     */
+    public final static CVector addY(CVector vec, double y) {
+        return new CVector(vec).addY(y);
+    }
+
+    /**
+     * Add values to Z component
+     *
+     * @param z
+     * @param vec
+     * @return new vector
+     */
+    public final static CVector addZ(CVector vec, double z) {
+        return new CVector(vec).addZ(z);
+    }
+
+    /**
+     * Sub components
      *
      * @param vec
-     * @return New vecotr instance
+     * @return this object to chain operations
      */
     public final CVector sub(CVector vec) {
         return sub(vec.m_x, vec.m_y, vec.m_z);
     }
 
     /**
-     * Sub values of components and create new Vector
+     * Sub values of components
      *
      * @param x
      * @param y
      * @param z
-     * @return New vector instance
+     * @return this object to chain operations
      */
     public final CVector sub(double x, double y, double z) {
-        return new CVector(x - m_x, y - m_y, z - m_z);
+        m_x -= x;
+        m_y -= y;
+        m_z -= z;
+        return this;
     }
 
     /**
-     * Sub values of X component and create new Vector
+     * Sub values of X component
      *
      * @param x
-     * @return New vector instance
+     * @return this object to chain operations
      */
     public final CVector subX(double x) {
-        return new CVector(x - m_x, m_y, m_z);
+        m_x -= x;
+        return this;
     }
 
     /**
-     * Sub values of Y component and create new Vector
+     * Sub values of Y component
      *
      * @param y
-     * @return New vector instance
+     * @return this object to chain operations
      */
     public final CVector subY(double y) {
-        return new CVector(m_x, y - m_y, m_z);
+        m_y -= y;
+        return this;
     }
 
     /**
-     * Sub values of Z component and create new Vector
+     * Sub values of Z component
      *
      * @param z
-     * @return New vector instance
+     * @return this object to chain operations
      */
     public final CVector subZ(double z) {
-        return new CVector(m_x, m_y, z - m_z);
+        m_z -= z;
+        return this;
+    }
+
+    /**
+     * Sub components
+     *
+     * @param vec1
+     * @param vec2
+     * @return new vector
+     */
+    public final static CVector sub(CVector vec1, CVector vec2) {
+        return sub(vec1, vec2.m_x, vec2.m_y, vec2.m_z);
+    }
+
+    /**
+     * Sub values of components
+     *
+     * @param vec
+     * @param x
+     * @param y
+     * @param z
+     * @return new vector
+     */
+    public final static CVector sub(CVector vec, double x, double y, double z) {
+        return new CVector(vec).sub(x, y, z);
+    }
+
+    /**
+     * Sub values of X component
+     *
+     * @param vec
+     * @param x
+     * @return new vector
+     */
+    public final static CVector subX(CVector vec, double x) {
+        return new CVector(vec).subX(x);
+    }
+
+    /**
+     * Sub values of Y component
+     *
+     * @param vec
+     * @param y
+     * @return new vector
+     */
+    public final static CVector subY(CVector vec, double y) {
+        return new CVector(vec).subY(y);
+    }
+
+    /**
+     * Sub values of Z component
+     *
+     * @param vec
+     * @param z
+     * @return new vector
+     */
+    public final static CVector subZ(CVector vec, double z) {
+        return new CVector(vec).subZ(z);
     }
 
     /**
      * Multiply vector by scallar
      *
      * @param s
-     * @return
+     * @return this object to chain operations
      */
     public final CVector mul(double s) {
-        return new CVector(m_x * s, m_y * s, m_z * s);
+        m_x *= s;
+        m_y *= s;
+        m_z *= s;
+        return this;
+    }
+
+    /**
+     * Multiply vector by scallar
+     *
+     * @param vec
+     * @param s
+     * @return new vector
+     */
+    public final static CVector mul(CVector vec, double s) {
+        return new CVector(vec).mul(s);
     }
 
     /**
      * Divide vector by scallar
      *
      * @param s
-     * @return
+     * @return this object to chain operations
      */
     public final CVector div(double s) {
         return mul(1 / s);
     }
 
     /**
+     * Divide vector by scallar
+     *
+     * @param s
+     * @return new vector
+     */
+    public final static CVector div(CVector vec, double s) {
+        return mul(vec, 1 / s);
+    }
+
+    /**
+     * Calculate vector cross product
+     *
+     * @param vec1
+     * @param vec2
+     * @return new vector
+     */
+    public final static CVector cross(CVector vec1, CVector vec2) {
+        return vec1.cross(vec2);
+    }
+
+    /**
      * Calculate vector cross product
      *
      * @param vec
-     * @return
+     * @return new vector
      */
     public final CVector cross(CVector vec) {
         return new CVector(m_y * vec.m_z - m_z * vec.m_y,
                 m_z * vec.m_x - m_x * vec.m_z,
                 m_x * vec.m_y - m_y * vec.m_x);
+    }
+
+    /**
+     * Calculate vector dot product
+     *
+     * @param vec1
+     * @param vec2
+     * @return
+     */
+    public final static double dot(CVector vec1, CVector vec2) {
+        return vec1.dot(vec2);
     }
 
     /**
@@ -247,7 +438,6 @@ public final class CVector {
     public final double dot(CVector vec) {
         return m_x * vec.m_x + m_y * vec.m_x + m_z * vec.m_z;
     }
-
 
     public final void normalize() {
         double length = getLength();
@@ -261,6 +451,20 @@ public final class CVector {
             m_y /= length;
             m_z /= length;
         }
+    }
+
+    public final static double angle(CVector vec, CVector normal) {
+        return vec.angle(normal);
+    }
+
+    public final double angle(CVector normal) {
+        return Math.acos(dot(normal));
+    }
+
+
+    public final CVector reflection(CVector normal) {
+        CVector vec = toUnitVector();
+        return vec.sub(normal.mul(2.0 * vec.dot(normal))).mul(getLength());
     }
 
     @Override
@@ -282,5 +486,9 @@ public final class CVector {
                 Double.doubleToRawLongBits(m_y) ^
                 Double.doubleToRawLongBits(m_z);
         return (int) (longHash ^ (longHash >>> 32));
+    }
+
+    public final CVector clone() {
+        return new CVector(this);
     }
 }
