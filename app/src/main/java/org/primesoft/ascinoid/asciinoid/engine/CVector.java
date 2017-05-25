@@ -6,7 +6,7 @@ package org.primesoft.ascinoid.asciinoid.engine;
  *
  * @author SBPrime
  */
-public class CVector {
+public final class CVector {
     /**
      * Empty (0 vector)
      */
@@ -20,31 +20,31 @@ public class CVector {
     private double m_z;
 
 
-    public double getX() {
+    public final double getX() {
         return m_x;
     }
 
-    public void setX(double x) {
+    public final void setX(double x) {
         this.m_x = x;
     }
 
-    public double getY() {
+    public final double getY() {
         return m_y;
     }
 
-    public void setY(double y) {
+    public final void setY(double y) {
         this.m_y = y;
     }
 
-    public double getZ() {
+    public final double getZ() {
         return m_z;
     }
 
-    public void setZ(double z) {
+    public final void setZ(double z) {
         this.m_z = z;
     }
 
-    public double getLength() {
+    public final double getLength() {
         return Math.sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
     }
 
@@ -70,7 +70,7 @@ public class CVector {
      *
      * @return
      */
-    public CVector toUnitVector() {
+    public final CVector toUnitVector() {
         double length = getLength();
 
         if (length == 0) {
@@ -85,7 +85,7 @@ public class CVector {
      *
      * @param vec
      */
-    public void set(CVector vec) {
+    public final void set(CVector vec) {
         set(vec.m_x, vec.m_y, vec.m_z);
     }
 
@@ -96,7 +96,7 @@ public class CVector {
      * @param y
      * @param z
      */
-    public void set(double x, double y, double z) {
+    public final void set(double x, double y, double z) {
         m_x = x;
         m_y = y;
         m_z = z;
@@ -108,7 +108,7 @@ public class CVector {
      * @param vec
      * @return New vecotr instance
      */
-    public CVector add(CVector vec) {
+    public final CVector add(CVector vec) {
         return add(vec.m_x, vec.m_y, vec.m_z);
     }
 
@@ -120,7 +120,7 @@ public class CVector {
      * @param z
      * @return New vector instance
      */
-    public CVector add(double x, double y, double z) {
+    public final CVector add(double x, double y, double z) {
         return new CVector(x + m_x, y + m_y, z + m_z);
     }
 
@@ -130,7 +130,7 @@ public class CVector {
      * @param x
      * @return New vector instance
      */
-    public CVector addX(double x) {
+    public final CVector addX(double x) {
         return new CVector(x + m_x, m_y, m_z);
     }
 
@@ -140,7 +140,7 @@ public class CVector {
      * @param y
      * @return New vector instance
      */
-    public CVector addY(double y) {
+    public final CVector addY(double y) {
         return new CVector(m_x, y + m_y, m_z);
     }
 
@@ -150,7 +150,7 @@ public class CVector {
      * @param z
      * @return New vector instance
      */
-    public CVector addZ(double z) {
+    public final CVector addZ(double z) {
         return new CVector(m_x, m_y, z + m_z);
     }
 
@@ -160,50 +160,50 @@ public class CVector {
      * @param vec
      * @return New vecotr instance
      */
-    public CVector sub(CVector vec) {
+    public final CVector sub(CVector vec) {
         return sub(vec.m_x, vec.m_y, vec.m_z);
     }
 
     /**
-     * Sub values to components and create new Vector
+     * Sub values of components and create new Vector
      *
      * @param x
      * @param y
      * @param z
      * @return New vector instance
      */
-    public CVector sub(double x, double y, double z) {
-        return new CVector(x + m_x, y + m_y, z + m_z);
+    public final CVector sub(double x, double y, double z) {
+        return new CVector(x - m_x, y - m_y, z - m_z);
     }
 
     /**
-     * Sub values to X component and create new Vector
+     * Sub values of X component and create new Vector
      *
      * @param x
      * @return New vector instance
      */
-    public CVector subX(double x) {
-        return new CVector(x + m_x, m_y, m_z);
+    public final CVector subX(double x) {
+        return new CVector(x - m_x, m_y, m_z);
     }
 
     /**
-     * Sub values to Y component and create new Vector
+     * Sub values of Y component and create new Vector
      *
      * @param y
      * @return New vector instance
      */
-    public CVector subY(double y) {
-        return new CVector(m_x, y + m_y, m_z);
+    public final CVector subY(double y) {
+        return new CVector(m_x, y - m_y, m_z);
     }
 
     /**
-     * Sub values to Z component and create new Vector
+     * Sub values of Z component and create new Vector
      *
      * @param z
      * @return New vector instance
      */
-    public CVector subZ(double z) {
-        return new CVector(m_x, m_y, z + m_z);
+    public final CVector subZ(double z) {
+        return new CVector(m_x, m_y, z - m_z);
     }
 
     /**
@@ -212,7 +212,7 @@ public class CVector {
      * @param s
      * @return
      */
-    public CVector mul(double s) {
+    public final CVector mul(double s) {
         return new CVector(m_x * s, m_y * s, m_z * s);
     }
 
@@ -222,7 +222,7 @@ public class CVector {
      * @param s
      * @return
      */
-    public CVector div(double s) {
+    public final CVector div(double s) {
         return mul(1 / s);
     }
 
@@ -232,7 +232,7 @@ public class CVector {
      * @param vec
      * @return
      */
-    public CVector cross(CVector vec) {
+    public final CVector cross(CVector vec) {
         return new CVector(m_y * vec.m_z - m_z * vec.m_y,
                 m_z * vec.m_x - m_x * vec.m_z,
                 m_x * vec.m_y - m_y * vec.m_x);
@@ -244,20 +244,19 @@ public class CVector {
      * @param vec
      * @return
      */
-    public double dot(CVector vec) {
+    public final double dot(CVector vec) {
         return m_x * vec.m_x + m_y * vec.m_x + m_z * vec.m_z;
     }
 
 
-    public void normalize() {
+    public final void normalize() {
         double length = getLength();
 
         if (length == 0) {
             m_x = 0;
             m_y = 0;
             m_z = 0;
-        }
-        else {
+        } else {
             m_x /= length;
             m_y /= length;
             m_z /= length;
@@ -265,7 +264,7 @@ public class CVector {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (!(obj instanceof CVector)) {
             return false;
         }
@@ -278,7 +277,7 @@ public class CVector {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         long longHash = Double.doubleToRawLongBits(m_x) ^
                 Double.doubleToRawLongBits(m_y) ^
                 Double.doubleToRawLongBits(m_z);
